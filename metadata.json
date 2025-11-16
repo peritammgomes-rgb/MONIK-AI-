@@ -1,0 +1,7 @@
+{
+  "name": "Monik AI",
+  "description": "A personal and business financial management assistant to help you organize, conquer, and overflow. Powered by Gemini AI.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
