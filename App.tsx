@@ -299,7 +299,18 @@ const App: React.FC = () => {
   };
 
   const addContributionToGoal = (goalId: string, amount: number) => {
-    setGoals(prev => prev.map(g => g.id === goalId ? { ...g, currentAmount: g.currentAmount + amount } : g));
+    if (isNaN(amount) || amount <= 0) {
+        console.error(`Invalid contribution amount provided: ${amount}`);
+        return;
+    }
+    setGoals(prev => prev.map(g => {
+        if (g.id === goalId) {
+            const newAmount = g.currentAmount + amount;
+            // Ensure currentAmount doesn't exceed targetAmount
+            return { ...g, currentAmount: Math.min(newAmount, g.targetAmount) };
+        }
+        return g;
+    }));
   };
   
     const addOrUpdateSpendingCap = (panel: PanelType, category: string, limit: number, subCategory?: string) => {

@@ -62,6 +62,16 @@ const AnalysisModal: React.FC<AnalysisModalProps> = ({
 
       try {
         const result = await generateFinancialAnalysis(filteredTransactions, panel, businessActivity);
+        
+        // Add client-side calculation to ensure accuracy for personal panel
+        if (panel === 'personal' && result) {
+            const clientSideTotalIncome = filteredTransactions
+                .filter(t => t.type === 'income')
+                .reduce((sum, t) => sum + t.amount, 0);
+
+            (result as FinancialAnalysis).totalIncome = clientSideTotalIncome;
+        }
+        
         setAnalysis(result);
       } catch (err) {
         setError('Não foi possível gerar a análise. Tente novamente mais tarde.');
@@ -83,15 +93,20 @@ const AnalysisModal: React.FC<AnalysisModalProps> = ({
 
   const handleAddGoal = (e: React.FormEvent) => {
     e.preventDefault();
-    if(goalName && goalTarget && goalContribution) {
+    const target = parseFloat(goalTarget);
+    const contribution = parseFloat(goalContribution);
+
+    if (goalName.trim() && !isNaN(target) && target > 0 && !isNaN(contribution) && contribution >= 0) {
         onAddGoal({
-            name: goalName,
-            targetAmount: parseFloat(goalTarget),
-            monthlyContribution: parseFloat(goalContribution)
+            name: goalName.trim(),
+            targetAmount: target,
+            monthlyContribution: contribution
         });
         setGoalName('');
         setGoalTarget('');
         setGoalContribution('');
+    } else {
+        alert("Por favor, preencha todos os campos com valores válidos. O valor alvo deve ser um número positivo.");
     }
   }
   
