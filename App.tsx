@@ -25,7 +25,14 @@ const App: React.FC = () => {
     const saved = localStorage.getItem('businessTransactions');
     return saved ? JSON.parse(saved) : mockBusinessTransactions;
   });
-  const [goals, setGoals] = useState<Goal[]>([]);
+  const [goals, setGoals] = useState<Goal[]>(() => {
+    try {
+        const saved = localStorage.getItem('goals');
+        return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+        return [];
+    }
+  });
   
   const [bankAccounts, setBankAccounts] = useState<Omit<BankAccount, 'currentBalance'>[]>(() => {
     try {
@@ -97,6 +104,10 @@ const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('businessTransactions', JSON.stringify(businessTransactions));
   }, [businessTransactions]);
+
+  useEffect(() => {
+    localStorage.setItem('goals', JSON.stringify(goals));
+  }, [goals]);
 
 
   // Derived state: Recalculate account balances whenever dependencies change
@@ -182,6 +193,7 @@ const App: React.FC = () => {
       localStorage.removeItem('bankAccounts');
       localStorage.removeItem('appointments');
       localStorage.removeItem('spendingCaps');
+      localStorage.removeItem('goals');
 
       // Reset component state
       setPersonalTransactions([]);

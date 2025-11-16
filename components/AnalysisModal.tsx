@@ -157,7 +157,14 @@ const AnalysisModal: React.FC<AnalysisModalProps> = ({
                     <div key={item.label}>
                       <div className="flex justify-between text-sm mb-1">
                         <span className="font-medium text-slate-700 dark:text-slate-300">{item.label}</span>
-                        <span className="font-mono text-slate-500 dark:text-slate-400">{formatCurrency(item.value)}</span>
+                        <span className="font-mono text-slate-500 dark:text-slate-400">
+                          {formatCurrency(item.value)}
+                          {data.totalIncome > 0 && (
+                            <span className="ml-2 text-xs opacity-75">
+                              ({((item.value / data.totalIncome) * 100).toFixed(1)}% da renda)
+                            </span>
+                          )}
+                        </span>
                       </div>
                       <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-4">
                         <div
@@ -251,9 +258,19 @@ const AnalysisModal: React.FC<AnalysisModalProps> = ({
                            <div className="h-4 rounded-full bg-green-500" style={{ width: `${Math.min(progress, 100)}%` }}></div>
                         </div>
                         <div className="text-right text-sm font-semibold mt-1">{progress.toFixed(1)}%</div>
-                        <div className="flex gap-2 mt-3 items-center">
-                            <input type="number" placeholder="Valor do aporte" value={contributionAmount[goal.id] || ''} onChange={e => setContributionAmount(prev => ({ ...prev, [goal.id]: e.target.value }))} className="flex-grow bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm" />
-                            <button onClick={() => handleAddContribution(goal.id)} title="Adicionar aporte à meta" className="bg-green-500 text-white px-3 py-1 text-sm rounded-md hover:bg-green-600">Adicionar Aporte</button>
+                        <div className="flex gap-2 mt-3 items-center flex-wrap">
+                            <input type="number" placeholder="Valor do aporte manual" value={contributionAmount[goal.id] || ''} onChange={e => setContributionAmount(prev => ({ ...prev, [goal.id]: e.target.value }))} className="flex-grow bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm" />
+                            <button onClick={() => handleAddContribution(goal.id)} title="Adicionar aporte à meta" className="bg-green-600 text-white px-3 py-1.5 text-sm rounded-md hover:bg-green-700">Adicionar Aporte</button>
+                             {goal.monthlyContribution > 0 && (
+                                <button 
+                                    type="button"
+                                    onClick={() => onAddContribution(goal.id, goal.monthlyContribution)} 
+                                    title={`Adicionar aporte mensal de ${formatCurrency(goal.monthlyContribution)}`} 
+                                    className="bg-indigo-500 text-white px-3 py-1.5 text-sm rounded-md hover:bg-indigo-600"
+                                >
+                                    Aportar Mensal ({formatCurrency(goal.monthlyContribution)})
+                                </button>
+                            )}
                         </div>
                     </div>
                 )
