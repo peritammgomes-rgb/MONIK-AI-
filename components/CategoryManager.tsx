@@ -98,7 +98,7 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({
             onChange={(e) => setNewCategoryValue(e.target.value)}
             className="flex-grow bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm focus:ring-indigo-500 focus:border-indigo-500"
           />
-          <button onClick={() => handleAddCategory(type)} title={`Adicionar nova categoria de ${type === 'expense' ? 'saída' : 'entrada'}`} className={`${buttonClass} text-white px-3 py-1 text-sm rounded-md font-semibold`}>Adicionar Categoria</button>
+          <button onClick={() => handleAddCategory(type)} title={`Adicionar nova categoria de ${type === 'expense' ? 'despesa' : 'entrada'}`} className={`${buttonClass} text-white px-3 py-1 text-sm rounded-md font-semibold`}>Adicionar Categoria</button>
         </div>
       </section>
     );
@@ -114,7 +114,7 @@ const CategoryManager: React.FC<CategoryManagerProps> = ({
                 </button>
             </header>
             <main className="flex-grow p-6 overflow-y-auto space-y-6">
-                {renderCategorySection('Categorias de Saída', expenseCategories, 'expense')}
+                {renderCategorySection('Categorias de Despesa', expenseCategories, 'expense')}
                 <hr className="border-slate-200 dark:border-slate-700"/>
                 {renderCategorySection('Categorias de Entrada', incomeCategories, 'income')}
             </main>

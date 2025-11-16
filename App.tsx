@@ -174,7 +174,28 @@ const App: React.FC = () => {
   }, [personalTransactions, businessTransactions, spendingCaps, notifiedCaps, activeAlerts]);
 
 
-  const handleLogin = () => setIsAuthenticated(true);
+  const handleLogin = (isNewUser: boolean = false) => {
+    if (isNewUser) {
+      // Clear local storage for a fresh start
+      localStorage.removeItem('personalTransactions');
+      localStorage.removeItem('businessTransactions');
+      localStorage.removeItem('bankAccounts');
+      localStorage.removeItem('appointments');
+      localStorage.removeItem('spendingCaps');
+
+      // Reset component state
+      setPersonalTransactions([]);
+      setBusinessTransactions([]);
+      setBankAccounts([]);
+      setAppointments([]);
+      setSpendingCaps([]);
+      setGoals([]);
+      setNotifiedCaps({});
+      setActiveAlerts([]);
+      setBusinessActivity('');
+    }
+    setIsAuthenticated(true);
+  };
   const handleLogout = () => setIsAuthenticated(false);
 
   const addAppointment = (appointment: Omit<Appointment, 'id'>) => {

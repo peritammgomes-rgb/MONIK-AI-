@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 interface AuthPageProps {
-  onLogin: () => void;
+  onLogin: (isNewUser?: boolean) => void;
 }
 
 const AuthPage: React.FC<AuthPageProps> = ({ onLogin }) => {
@@ -35,7 +35,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin }) => {
             </button>
           </div>
 
-          <form onSubmit={(e) => { e.preventDefault(); onLogin(); }}>
+          <form onSubmit={(e) => { e.preventDefault(); onLogin(activeTab === 'register'); }}>
             <div className="space-y-4">
               {activeTab === 'register' && (
                 <div>

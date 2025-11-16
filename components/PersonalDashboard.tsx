@@ -85,7 +85,7 @@ const PersonalDashboard: React.FC<PersonalDashboardProps> = ({
                         <TrendingDownIcon className="h-6 w-6 text-red-600" />
                     </div>
                     <div>
-                        <p className="text-sm text-slate-500">Saídas</p>
+                        <p className="text-sm text-slate-500">Despesas</p>
                         <p className="text-2xl font-semibold text-red-600">
                             {totalExpense.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                         </p>

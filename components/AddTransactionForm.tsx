@@ -270,10 +270,10 @@ const AddTransactionForm: React.FC<AddTransactionFormProps> = ({
             <button
               type="button"
               onClick={() => { setType('expense'); }}
-              title="Registrar uma saída"
+              title="Registrar uma despesa"
               className={`w-full py-2 rounded-md text-sm font-medium transition ${type === 'expense' ? 'bg-red-500 text-white shadow' : 'text-slate-600 dark:text-slate-300'}`}
             >
-              Saída
+              Despesa
             </button>
             <button
               type="button"
